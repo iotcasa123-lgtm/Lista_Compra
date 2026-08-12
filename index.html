@@ -11,18 +11,10 @@
   <title>Lista de la compra</title>
   <style>
     :root {
-      --green: #2d6a4f;
-      --green-light: #e8f5ee;
-      --green-text: #1b4332;
-      --bg: #f7f6f3;
-      --card: #ffffff;
-      --border: #e8e6e0;
-      --text: #1c1c1a;
-      --muted: #888680;
-      --hint: #b8b6b0;
-      --danger: #c0392b;
-      --blue-bg: #e8f4fd;
-      --blue-text: #1a5276;
+      --green: #2d6a4f; --green-light: #e8f5ee; --green-text: #1b4332;
+      --bg: #f7f6f3; --card: #fff; --border: #e8e6e0;
+      --text: #1c1c1a; --muted: #888680; --hint: #b8b6b0;
+      --danger: #c0392b; --blue-bg: #e8f4fd; --blue-text: #1a5276;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
     html, body { height: 100%; overflow: hidden; }
@@ -34,19 +26,19 @@
     .screen.active { display: flex; }
     .centered-screen { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 28px 24px; text-align: center; overflow-y: auto; }
     .setup-emoji { font-size: 44px; margin-bottom: 16px; }
-    .setup-title { font-size: 22px; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+    .setup-title { font-size: 22px; font-weight: 700; margin-bottom: 6px; }
     .setup-sub { font-size: 15px; color: var(--muted); margin-bottom: 28px; line-height: 1.5; }
     .setup-card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 20px; width: 100%; max-width: 360px; text-align: left; }
     .field-label { font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 6px; display: block; }
     .field-group { margin-bottom: 14px; }
     .input { width: 100%; border: 1.5px solid var(--border); border-radius: 8px; padding: 11px 13px; font-size: 15px; background: var(--bg); color: var(--text); transition: border-color .15s; }
     .input:focus { outline: none; border-color: var(--green); }
-    .btn-primary { width: 100%; background: var(--green); color: white; border: none; border-radius: 9px; padding: 13px; font-size: 15px; font-weight: 600; cursor: pointer; transition: opacity .15s; }
+    .btn-primary { width: 100%; background: var(--green); color: white; border: none; border-radius: 9px; padding: 13px; font-size: 15px; font-weight: 600; cursor: pointer; }
     .btn-primary:active { opacity: .85; }
     .header { background: var(--card); border-bottom: 1px solid var(--border); padding: 12px 16px; display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
     .house-badge { width: 36px; height: 36px; background: var(--green-light); border-radius: 9px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
     .header-info { flex: 1; min-width: 0; }
-    .header-title { font-size: 15px; font-weight: 700; color: var(--text); }
+    .header-title { font-size: 15px; font-weight: 700; }
     .header-sub { font-size: 11px; color: var(--muted); margin-top: 1px; }
     .header-sub.err { color: var(--danger); }
     .tabbar { background: var(--card); border-top: 1px solid var(--border); display: flex; flex-shrink: 0; padding-bottom: env(safe-area-inset-bottom, 0px); }
@@ -66,32 +58,49 @@
     .qty-row { display: grid; grid-template-columns: 80px 1fr; gap: 10px; margin-bottom: 12px; }
     .qty-control { border: 1.5px solid var(--border); border-radius: 8px; display: flex; align-items: center; justify-content: space-between; background: var(--card); height: 42px; padding: 0 2px; }
     .qty-btn { background: none; border: none; font-size: 20px; color: var(--green); cursor: pointer; padding: 0 8px; font-weight: 600; line-height: 1; user-select: none; }
-    .qty-val { font-size: 15px; font-weight: 700; color: var(--text); min-width: 22px; text-align: center; }
+    .qty-val { font-size: 15px; font-weight: 700; min-width: 22px; text-align: center; }
     .select { width: 100%; border: 1.5px solid var(--border); border-radius: 8px; padding: 11px 13px; font-size: 14px; background: var(--bg); color: var(--text); appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23888' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; padding-right: 32px; }
     .select:focus { outline: none; border-color: var(--green); }
+
+    /* Photo picker */
+    .photo-picker { margin-bottom: 12px; }
+    .photo-btn { display: flex; align-items: center; gap: 8px; border: 1.5px dashed var(--border); border-radius: 8px; padding: 10px 13px; background: var(--bg); cursor: pointer; width: 100%; color: var(--muted); font-size: 13px; }
+    .photo-btn:active { background: var(--green-light); border-color: var(--green); }
+    .photo-preview-wrap { position: relative; display: inline-block; margin-top: 8px; }
+    .photo-preview { width: 72px; height: 72px; object-fit: cover; border-radius: 8px; border: 1px solid var(--border); display: block; }
+    .photo-remove { position: absolute; top: -6px; right: -6px; background: var(--danger); color: white; border: none; border-radius: 50%; width: 20px; height: 20px; font-size: 11px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-weight: 700; }
+
     .btn-add { width: 100%; background: var(--green); color: white; border: none; border-radius: 9px; padding: 13px; font-size: 15px; font-weight: 600; cursor: pointer; margin-top: 4px; display: flex; align-items: center; justify-content: center; gap: 6px; }
     .btn-add:active { opacity: .85; }
+    .btn-add:disabled { opacity: .6; cursor: not-allowed; }
     .toast { background: var(--green); color: white; border-radius: 9px; padding: 10px 14px; font-size: 13px; font-weight: 600; text-align: center; margin-top: 10px; opacity: 0; transition: opacity .3s; }
     .toast.show { opacity: 1; }
     .filter-strip { background: var(--card); border-bottom: 1px solid var(--border); padding: 8px 14px; display: flex; gap: 6px; overflow-x: auto; flex-shrink: 0; scrollbar-width: none; }
     .filter-strip::-webkit-scrollbar { display: none; }
-    .chip { border: 1px solid var(--border); border-radius: 20px; padding: 5px 12px; font-size: 12px; color: var(--muted); white-space: nowrap; background: var(--card); cursor: pointer; transition: all .12s; user-select: none; }
+    .chip { border: 1px solid var(--border); border-radius: 20px; padding: 5px 12px; font-size: 12px; color: var(--muted); white-space: nowrap; background: var(--card); cursor: pointer; user-select: none; }
     .chip.on { background: var(--green-light); border-color: var(--green); color: var(--green-text); font-weight: 600; }
     .sec-label { font-size: 11px; font-weight: 700; color: var(--hint); text-transform: uppercase; letter-spacing: .06em; margin: 14px 0 8px; display: flex; align-items: center; justify-content: space-between; }
     .sec-count { font-weight: 400; opacity: .7; }
+
+    /* Items */
     .item { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px; margin-bottom: 6px; display: flex; align-items: center; gap: 9px; }
     .item.done { background: #fafaf8; opacity: .55; }
     .item-check { width: 20px; height: 20px; border-radius: 50%; border: 1.5px solid var(--border); flex-shrink: 0; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all .15s; }
     .item-check.checked { background: var(--green); border-color: var(--green); }
     .item-check.checked::after { content: ''; width: 5px; height: 9px; border: 2px solid white; border-top: none; border-left: none; transform: rotate(45deg) translateY(-1px); display: block; }
     .item-body { flex: 1; min-width: 0; }
-    .item-name { font-size: 14px; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .item-name { font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .done .item-name { text-decoration: line-through; color: var(--hint); }
     .item-meta { display: flex; align-items: center; gap: 5px; margin-top: 3px; }
     .tag-super { font-size: 11px; padding: 2px 7px; border-radius: 20px; background: var(--blue-bg); color: var(--blue-text); font-weight: 500; white-space: nowrap; }
     .done .tag-super { opacity: .6; }
     .item-qty { background: var(--text); color: white; border-radius: 5px; padding: 2px 8px; font-size: 12px; font-weight: 700; flex-shrink: 0; min-width: 30px; text-align: center; }
     .done .item-qty { background: var(--hint); }
+
+    /* Photo thumb on item */
+    .item-photo-btn { width: 36px; height: 36px; border-radius: 6px; overflow: hidden; border: 1px solid var(--border); flex-shrink: 0; cursor: pointer; background: var(--bg); display: flex; align-items: center; justify-content: center; font-size: 16px; }
+    .item-photo-btn img { width: 100%; height: 100%; object-fit: cover; }
+
     .item-del { color: var(--hint); font-size: 16px; background: none; border: none; cursor: pointer; flex-shrink: 0; padding: 2px 4px; }
     .item-del:active { color: var(--danger); }
     .empty { text-align: center; padding: 48px 24px; }
@@ -104,22 +113,28 @@
     .modal-overlay.open { display: flex; }
     .sheet { background: var(--card); border-radius: 20px 20px 0 0; padding: 20px 20px calc(20px + env(safe-area-inset-bottom, 0px)); width: 100%; max-width: 540px; max-height: 90vh; overflow-y: auto; }
     .sheet-handle { width: 36px; height: 4px; background: var(--border); border-radius: 2px; margin: 0 auto 18px; }
-    .sheet-title { font-size: 16px; font-weight: 700; color: var(--text); margin-bottom: 16px; }
+    .sheet-title { font-size: 16px; font-weight: 700; margin-bottom: 16px; }
     .export-section-title { font-size: 11px; font-weight: 700; color: var(--hint); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 8px; }
     .toggle-row { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
-    .tog { border: 1px solid var(--border); border-radius: 20px; padding: 5px 12px; font-size: 12px; color: var(--muted); background: var(--card); cursor: pointer; transition: all .12s; user-select: none; }
+    .tog { border: 1px solid var(--border); border-radius: 20px; padding: 5px 12px; font-size: 12px; color: var(--muted); background: var(--card); cursor: pointer; user-select: none; }
     .tog.on { background: var(--green-light); border-color: var(--green); color: var(--green-text); font-weight: 600; }
     .export-divider { height: 1px; background: var(--border); margin: 4px 0 16px; }
-    .export-preview { background: var(--bg); border: 1px solid var(--border); border-radius: 9px; padding: 13px; font-size: 12px; font-family: 'Courier New', monospace; line-height: 1.9; color: var(--text); margin-bottom: 14px; white-space: pre-wrap; max-height: 200px; overflow-y: auto; }
+    .export-preview { background: var(--bg); border: 1px solid var(--border); border-radius: 9px; padding: 13px; font-size: 12px; font-family: 'Courier New', monospace; line-height: 1.9; margin-bottom: 14px; white-space: pre-wrap; max-height: 200px; overflow-y: auto; }
     .export-preview-empty { color: var(--hint); font-style: italic; }
     .export-btns { display: flex; gap: 8px; }
     .btn-wa { flex: 1; background: #25d366; color: white; border: none; border-radius: 9px; padding: 12px; font-size: 14px; font-weight: 600; cursor: pointer; }
     .btn-copy { flex: 1; background: var(--green); color: white; border: none; border-radius: 9px; padding: 12px; font-size: 14px; font-weight: 600; cursor: pointer; }
-    .btn-cancel { background: var(--bg); border: 1px solid var(--border); border-radius: 9px; padding: 12px 14px; font-size: 14px; cursor: pointer; color: var(--text); }
+    .btn-cancel { background: var(--bg); border: 1px solid var(--border); border-radius: 9px; padding: 12px 14px; font-size: 14px; cursor: pointer; }
     .confirm-text { font-size: 14px; color: var(--muted); line-height: 1.6; margin-bottom: 18px; }
     .confirm-btns { display: flex; gap: 8px; }
     .btn-confirm-danger { flex: 1; background: var(--danger); color: white; border: none; border-radius: 9px; padding: 12px; font-size: 14px; font-weight: 600; cursor: pointer; }
-    .btn-confirm-cancel { background: var(--bg); border: 1px solid var(--border); border-radius: 9px; padding: 12px 16px; font-size: 14px; cursor: pointer; color: var(--text); }
+    .btn-confirm-cancel { background: var(--bg); border: 1px solid var(--border); border-radius: 9px; padding: 12px 16px; font-size: 14px; cursor: pointer; }
+
+    /* Full screen photo viewer */
+    #photo-viewer { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.92); z-index: 200; align-items: center; justify-content: center; flex-direction: column; }
+    #photo-viewer.open { display: flex; }
+    #photo-viewer img { max-width: 95vw; max-height: 85vh; object-fit: contain; border-radius: 8px; }
+    #photo-viewer-close { position: absolute; top: 20px; right: 20px; background: rgba(255,255,255,.15); border: none; color: white; font-size: 24px; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; }
   </style>
 </head>
 <body>
@@ -129,7 +144,7 @@
   <span style="font-size:13px;color:var(--muted)">Cargando...</span>
 </div>
 
-<!-- ── NAME SCREEN ── -->
+<!-- NAME SCREEN -->
 <div class="screen" id="screen-name">
   <div class="centered-screen">
     <div class="setup-emoji" id="name-screen-emoji">🏡</div>
@@ -145,7 +160,7 @@
   </div>
 </div>
 
-<!-- ── MAIN APP ── -->
+<!-- MAIN APP -->
 <div class="screen" id="screen-app">
   <div class="header">
     <div class="house-badge" id="app-emoji">🏡</div>
@@ -195,7 +210,19 @@
               <option value="">Sin especificar</option>
             </select>
           </div>
-          <button class="btn-add" onclick="addItem()"><span>+</span> Añadir a la lista</button>
+          <!-- FOTO -->
+          <div class="photo-picker">
+            <label class="field-label">Foto del producto <span style="font-weight:400;color:var(--hint)">(opcional)</span></label>
+            <input type="file" id="photo-input" accept="image/*" style="display:none" onchange="handlePhotoSelected(this)"/>
+            <button type="button" class="photo-btn" onclick="document.getElementById('photo-input').click()">
+              <span>📷</span> <span>Añadir foto (cámara o galería)</span>
+            </button>
+            <div id="photo-preview-wrap" style="display:none" class="photo-preview-wrap">
+              <img id="photo-preview" class="photo-preview" src="" alt="Vista previa"/>
+              <button class="photo-remove" onclick="removePhoto()">✕</button>
+            </div>
+          </div>
+          <button class="btn-add" id="btn-add" onclick="addItem()"><span>+</span> Añadir a la lista</button>
           <div class="toast" id="add-toast">Añadido ✓</div>
         </div>
       </div>
@@ -230,6 +257,12 @@
       <div class="tab-line"></div><span class="tab-icon">🛒</span><span class="tab-lbl">Carrito</span>
     </button>
   </div>
+</div>
+
+<!-- PHOTO VIEWER -->
+<div id="photo-viewer" onclick="closePhotoViewer()">
+  <button id="photo-viewer-close" onclick="closePhotoViewer()">✕</button>
+  <img id="photo-viewer-img" src="" alt="Foto del producto"/>
 </div>
 
 <!-- EXPORT MODAL -->
@@ -298,6 +331,7 @@ let listFilter = 'all';
 let syncInterval = null;
 let exportSupers = new Set(['__all__']);
 let exportPersons = new Set(['__all__']);
+let selectedPhotoFile = null;
 
 function loadSupabase() {
   return new Promise((resolve, reject) => {
@@ -395,6 +429,63 @@ async function confirmAddSuper() {
   closeModal('addsuper-modal');
 }
 
+// ── Photo handling ────────────────────────────────────────────────
+function handlePhotoSelected(input) {
+  const file = input.files[0];
+  if (!file) return;
+  selectedPhotoFile = file;
+  const reader = new FileReader();
+  reader.onload = e => {
+    document.getElementById('photo-preview').src = e.target.result;
+    document.getElementById('photo-preview-wrap').style.display = 'inline-block';
+  };
+  reader.readAsDataURL(file);
+}
+
+function removePhoto() {
+  selectedPhotoFile = null;
+  document.getElementById('photo-input').value = '';
+  document.getElementById('photo-preview').src = '';
+  document.getElementById('photo-preview-wrap').style.display = 'none';
+}
+
+async function uploadPhoto(itemId) {
+  if (!selectedPhotoFile) return null;
+  // Compress to max 800px and ~300kb
+  const compressed = await compressImage(selectedPhotoFile, 800, 0.75);
+  const path = `${houseId}/${itemId}.jpg`;
+  const { error } = await sb.storage.from('product-photos').upload(path, compressed, { upsert: true, contentType: 'image/jpeg' });
+  if (error) { console.error('Upload error:', error); return null; }
+  const { data } = sb.storage.from('product-photos').getPublicUrl(path);
+  return data.publicUrl;
+}
+
+async function deletePhoto(itemId) {
+  const path = `${houseId}/${itemId}.jpg`;
+  await sb.storage.from('product-photos').remove([path]);
+}
+
+function compressImage(file, maxSize, quality) {
+  return new Promise(resolve => {
+    const img = new Image();
+    const url = URL.createObjectURL(file);
+    img.onload = () => {
+      URL.revokeObjectURL(url);
+      const canvas = document.createElement('canvas');
+      let w = img.width, h = img.height;
+      if (w > maxSize || h > maxSize) {
+        if (w > h) { h = Math.round(h * maxSize / w); w = maxSize; }
+        else { w = Math.round(w * maxSize / h); h = maxSize; }
+      }
+      canvas.width = w; canvas.height = h;
+      canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+      canvas.toBlob(blob => resolve(blob), 'image/jpeg', quality);
+    };
+    img.src = url;
+  });
+}
+
+// ── Fetch items ───────────────────────────────────────────────────
 async function fetchItems() {
   try {
     const { data, error } = await sb.from('items').select('*').eq('house_id', houseId).order('created_at', { ascending: true });
@@ -413,21 +504,40 @@ function setStatus(msg, err = false) {
   el.className = 'header-sub' + (err ? ' err' : '');
 }
 
+// ── Add item ──────────────────────────────────────────────────────
 async function addItem() {
   const name = document.getElementById('inp-name').value.trim();
   if (!name) { document.getElementById('inp-name').focus(); return; }
   const unit = document.getElementById('inp-unit').value;
   const sup = document.getElementById('inp-super').value;
-  const qtyLabel = qty + (unit !== 'ud' ? ' ' + unit : (qty === 1 ? ' ud' : ' ud'));
-  const { error } = await sb.from('items').insert({ house_id: houseId, name, qty: qtyLabel, supermarket: sup || null, person: currentUser, done: false });
-  if (!error) {
+  const qtyLabel = qty + (unit !== 'ud' ? ' ' + unit : ' ud');
+
+  const btn = document.getElementById('btn-add');
+  btn.disabled = true;
+  btn.textContent = selectedPhotoFile ? 'Subiendo foto...' : 'Añadiendo...';
+
+  const { data, error } = await sb.from('items').insert({
+    house_id: houseId, name, qty: qtyLabel,
+    supermarket: sup || null, person: currentUser, done: false, photo_url: null
+  }).select().single();
+
+  if (!error && data) {
+    // Upload photo if selected
+    if (selectedPhotoFile) {
+      const photoUrl = await uploadPhoto(data.id);
+      if (photoUrl) await sb.from('items').update({ photo_url: photoUrl }).eq('id', data.id);
+    }
     document.getElementById('inp-name').value = '';
     qty = 1;
     document.getElementById('qty-display').textContent = '1';
     document.getElementById('inp-super').value = '';
+    removePhoto();
     showToast();
     await fetchItems();
   }
+
+  btn.disabled = false;
+  btn.innerHTML = '<span>+</span> Añadir a la lista';
 }
 
 function changeQty(delta) {
@@ -449,10 +559,12 @@ async function toggleItem(id) {
 }
 
 async function deleteItem(id) {
+  await deletePhoto(id);
   await sb.from('items').delete().eq('id', id);
   await fetchItems();
 }
 
+// ── Render ────────────────────────────────────────────────────────
 function renderAll() {
   renderListFilters();
   renderList();
@@ -473,11 +585,7 @@ function chipHTML(val, label, on) {
   return `<div class="chip ${on ? 'on' : ''}" onclick="setListFilter('${val}')">${label}</div>`;
 }
 
-function setListFilter(val) {
-  listFilter = val;
-  renderListFilters();
-  renderList();
-}
+function setListFilter(val) { listFilter = val; renderListFilters(); renderList(); }
 
 function renderList() {
   const body = document.getElementById('list-body');
@@ -491,8 +599,7 @@ function renderList() {
     body.innerHTML = `<div class="empty"><div class="empty-icon">✅</div><div class="empty-text">No hay productos pendientes.<br>¡Añade algo desde la pestaña Añadir!</div></div>`;
     return;
   }
-  body.innerHTML = `<div class="sec-label"><span>Pendientes <span class="sec-count">(${pending.length})</span></span></div>` +
-    pending.map(itemHTML).join('');
+  body.innerHTML = `<div class="sec-label"><span>Pendientes <span class="sec-count">(${pending.length})</span></span></div>` + pending.map(itemHTML).join('');
 }
 
 function renderCart() {
@@ -502,16 +609,19 @@ function renderCart() {
     body.innerHTML = `<div class="empty"><div class="empty-icon">🛒</div><div class="empty-text">El carrito está vacío.<br>Marca productos como comprados en la Lista.</div></div>`;
     return;
   }
-  body.innerHTML = `<div class="sec-label"><span>Comprados <span class="sec-count">(${done.length})</span></span></div>` +
-    done.map(itemHTML).join('');
+  body.innerHTML = `<div class="sec-label"><span>Comprados <span class="sec-count">(${done.length})</span></span></div>` + done.map(itemHTML).join('');
 }
 
 function itemHTML(i) {
   const sup = i.supermarket ? `<span class="tag-super">${i.supermarket}</span>` : '';
+  const photoBtn = i.photo_url
+    ? `<div class="item-photo-btn" onclick="openPhotoViewer('${i.photo_url}')"><img src="${i.photo_url}" alt="foto"/></div>`
+    : `<div class="item-photo-btn" style="opacity:.3;cursor:default">📷</div>`;
   return `<div class="item ${i.done ? 'done' : ''}">
     <div class="item-check ${i.done ? 'checked' : ''}" onclick="toggleItem(${i.id})"></div>
     <div class="item-body"><div class="item-name">${i.name}</div><div class="item-meta">${sup}</div></div>
     <div class="item-qty">${i.qty || '1'}</div>
+    ${photoBtn}
     <button class="item-del" onclick="deleteItem(${i.id})">✕</button>
   </div>`;
 }
@@ -529,6 +639,17 @@ function updateCartBadge() {
   }
 }
 
+// ── Photo viewer ──────────────────────────────────────────────────
+function openPhotoViewer(url) {
+  document.getElementById('photo-viewer-img').src = url;
+  document.getElementById('photo-viewer').classList.add('open');
+}
+function closePhotoViewer() {
+  document.getElementById('photo-viewer').classList.remove('open');
+  document.getElementById('photo-viewer-img').src = '';
+}
+
+// ── Clear cart ────────────────────────────────────────────────────
 function openConfirmClear() {
   const done = items.filter(i => i.done);
   if (!done.length) { alert('El carrito ya está vacío.'); return; }
@@ -536,6 +657,7 @@ function openConfirmClear() {
     `Se eliminarán ${done.length} producto${done.length !== 1 ? 's' : ''} ya comprado${done.length !== 1 ? 's' : ''}. Los pendientes no se tocan.`;
   document.getElementById('confirm-btn').textContent = `Eliminar ${done.length} producto${done.length !== 1 ? 's' : ''}`;
   document.getElementById('confirm-btn').onclick = async () => {
+    for (const i of done) await deletePhoto(i.id);
     await sb.from('items').delete().in('id', done.map(i => i.id));
     closeModal('confirm-modal');
     await fetchItems();
@@ -543,6 +665,7 @@ function openConfirmClear() {
   openModal('confirm-modal');
 }
 
+// ── Export ────────────────────────────────────────────────────────
 function openExport() {
   const pending = items.filter(i => !i.done);
   if (!pending.length) { alert('No hay productos pendientes que exportar.'); return; }
@@ -571,11 +694,7 @@ function toggleHTML(val, label, on, type) {
 function toggleExportFilter(type, val) {
   const set = type === 'super' ? exportSupers : exportPersons;
   if (val === '__all__') { set.clear(); set.add('__all__'); }
-  else {
-    set.delete('__all__');
-    if (set.has(val)) { set.delete(val); if (set.size === 0) set.add('__all__'); }
-    else set.add(val);
-  }
+  else { set.delete('__all__'); if (set.has(val)) { set.delete(val); if (set.size === 0) set.add('__all__'); } else set.add(val); }
   const pending = items.filter(i => !i.done);
   renderExportToggles(
     [...new Set(pending.filter(i => i.supermarket).map(i => i.supermarket))],
@@ -639,6 +758,7 @@ document.addEventListener('keydown', e => {
   if (e.key === 'Enter' && document.activeElement.id === 'inp-name') addItem();
   if (e.key === 'Enter' && document.activeElement.id === 'name-input') saveName();
   if (e.key === 'Enter' && document.activeElement.id === 'new-super-input') confirmAddSuper();
+  if (e.key === 'Escape') closePhotoViewer();
 });
 
 if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => {});
