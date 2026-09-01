@@ -15,6 +15,7 @@
       --bg: #f7f6f3; --card: #fff; --border: #e8e6e0;
       --text: #1c1c1a; --muted: #888680; --hint: #b8b6b0;
       --danger: #c0392b; --blue-bg: #e8f4fd; --blue-text: #1a5276;
+      --amber: #b45309; --amber-bg: #fef3c7; --amber-border: #f59e0b;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
     html, body { height: 100%; overflow: hidden; }
@@ -43,12 +44,12 @@
     .header-sub.err { color: var(--danger); }
     .tabbar { background: var(--card); border-top: 1px solid var(--border); display: flex; flex-shrink: 0; padding-bottom: env(safe-area-inset-bottom, 0px); }
     .tab { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 9px 4px 8px; border: none; background: none; cursor: pointer; gap: 3px; position: relative; }
-    .tab-icon { font-size: 20px; line-height: 1; }
-    .tab-lbl { font-size: 10px; color: var(--hint); font-weight: 500; }
+    .tab-icon { font-size: 18px; line-height: 1; }
+    .tab-lbl { font-size: 9px; color: var(--hint); font-weight: 500; }
     .tab.on .tab-lbl { color: var(--green); font-weight: 700; }
-    .tab-line { position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 28px; height: 2.5px; border-radius: 0 0 3px 3px; background: transparent; }
+    .tab-line { position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 24px; height: 2.5px; border-radius: 0 0 3px 3px; background: transparent; }
     .tab.on .tab-line { background: var(--green); }
-    .tab-badge { position: absolute; top: 7px; right: calc(50% - 18px); background: var(--green); color: white; font-size: 9px; font-weight: 700; border-radius: 8px; padding: 1px 5px; min-width: 16px; text-align: center; }
+    .tab-badge { position: absolute; top: 7px; right: calc(50% - 16px); background: var(--green); color: white; font-size: 9px; font-weight: 700; border-radius: 8px; padding: 1px 4px; min-width: 14px; text-align: center; }
     .tab-panel { display: none; flex: 1; flex-direction: column; overflow: hidden; }
     .tab-panel.active { display: flex; }
     .body { flex: 1; overflow-y: auto; padding: 14px 14px 8px; -webkit-overflow-scrolling: touch; }
@@ -62,6 +63,16 @@
     .select { width: 100%; border: 1.5px solid var(--border); border-radius: 8px; padding: 11px 13px; font-size: 14px; background: var(--bg); color: var(--text); appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23888' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; padding-right: 32px; }
     .select:focus { outline: none; border-color: var(--green); }
 
+    /* Wishlist toggle */
+    .wishlist-toggle { display: flex; align-items: center; justify-content: space-between; background: var(--bg); border: 1.5px solid var(--border); border-radius: 8px; padding: 10px 13px; margin-bottom: 12px; cursor: pointer; user-select: none; transition: all .15s; }
+    .wishlist-toggle.active { background: var(--amber-bg); border-color: var(--amber-border); }
+    .wishlist-toggle-label { display: flex; align-items: center; gap: 8px; font-size: 14px; color: var(--muted); }
+    .wishlist-toggle.active .wishlist-toggle-label { color: var(--amber); font-weight: 600; }
+    .toggle-switch { width: 36px; height: 20px; background: var(--border); border-radius: 10px; position: relative; transition: background .2s; flex-shrink: 0; }
+    .toggle-switch::after { content: ''; position: absolute; width: 16px; height: 16px; background: white; border-radius: 50%; top: 2px; left: 2px; transition: transform .2s; box-shadow: 0 1px 3px rgba(0,0,0,.2); }
+    .wishlist-toggle.active .toggle-switch { background: var(--amber-border); }
+    .wishlist-toggle.active .toggle-switch::after { transform: translateX(16px); }
+
     /* Photo picker */
     .photo-picker { margin-bottom: 12px; }
     .photo-btn { display: flex; align-items: center; gap: 8px; border: 1.5px dashed var(--border); border-radius: 8px; padding: 10px 13px; background: var(--bg); cursor: pointer; width: 100%; color: var(--muted); font-size: 13px; }
@@ -70,11 +81,16 @@
     .photo-preview { width: 72px; height: 72px; object-fit: cover; border-radius: 8px; border: 1px solid var(--border); display: block; }
     .photo-remove { position: absolute; top: -6px; right: -6px; background: var(--danger); color: white; border: none; border-radius: 50%; width: 20px; height: 20px; font-size: 11px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-weight: 700; }
 
-    .btn-add { width: 100%; background: var(--green); color: white; border: none; border-radius: 9px; padding: 13px; font-size: 15px; font-weight: 600; cursor: pointer; margin-top: 4px; display: flex; align-items: center; justify-content: center; gap: 6px; }
+    .btn-add { width: 100%; color: white; border: none; border-radius: 9px; padding: 13px; font-size: 15px; font-weight: 600; cursor: pointer; margin-top: 4px; display: flex; align-items: center; justify-content: center; gap: 6px; transition: background .2s; }
+    .btn-add.to-list { background: var(--green); }
+    .btn-add.to-wish { background: var(--amber-border); }
     .btn-add:active { opacity: .85; }
     .btn-add:disabled { opacity: .6; cursor: not-allowed; }
-    .toast { background: var(--green); color: white; border-radius: 9px; padding: 10px 14px; font-size: 13px; font-weight: 600; text-align: center; margin-top: 10px; opacity: 0; transition: opacity .3s; }
+    .toast { border-radius: 9px; padding: 10px 14px; font-size: 13px; font-weight: 600; text-align: center; margin-top: 10px; opacity: 0; transition: opacity .3s; color: white; }
     .toast.show { opacity: 1; }
+    .toast.green { background: var(--green); }
+    .toast.amber { background: var(--amber-border); }
+
     .filter-strip { background: var(--card); border-bottom: 1px solid var(--border); padding: 8px 14px; display: flex; gap: 6px; overflow-x: auto; flex-shrink: 0; scrollbar-width: none; }
     .filter-strip::-webkit-scrollbar { display: none; }
     .chip { border: 1px solid var(--border); border-radius: 20px; padding: 5px 12px; font-size: 12px; color: var(--muted); white-space: nowrap; background: var(--card); cursor: pointer; user-select: none; }
@@ -85,6 +101,7 @@
     /* Items */
     .item { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px; margin-bottom: 6px; display: flex; align-items: center; gap: 9px; }
     .item.done { background: #fafaf8; opacity: .55; }
+    .item.wish { border-color: var(--amber-border); background: #fffdf5; }
     .item-check { width: 20px; height: 20px; border-radius: 50%; border: 1.5px solid var(--border); flex-shrink: 0; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all .15s; }
     .item-check.checked { background: var(--green); border-color: var(--green); }
     .item-check.checked::after { content: ''; width: 5px; height: 9px; border: 2px solid white; border-top: none; border-left: none; transform: rotate(45deg) translateY(-1px); display: block; }
@@ -96,13 +113,15 @@
     .done .tag-super { opacity: .6; }
     .item-qty { background: var(--text); color: white; border-radius: 5px; padding: 2px 8px; font-size: 12px; font-weight: 700; flex-shrink: 0; min-width: 30px; text-align: center; }
     .done .item-qty { background: var(--hint); }
-
-    /* Photo thumb on item */
     .item-photo-btn { width: 36px; height: 36px; border-radius: 6px; overflow: hidden; border: 1px solid var(--border); flex-shrink: 0; cursor: pointer; background: var(--bg); display: flex; align-items: center; justify-content: center; font-size: 16px; }
     .item-photo-btn img { width: 100%; height: 100%; object-fit: cover; }
-
     .item-del { color: var(--hint); font-size: 16px; background: none; border: none; cursor: pointer; flex-shrink: 0; padding: 2px 4px; }
     .item-del:active { color: var(--danger); }
+
+    /* Move to list button (wishlist) */
+    .btn-move { background: var(--green-light); border: 1px solid var(--green); color: var(--green-text); border-radius: 6px; padding: 4px 8px; font-size: 11px; font-weight: 700; cursor: pointer; white-space: nowrap; flex-shrink: 0; }
+    .btn-move:active { background: var(--green); color: white; }
+
     .empty { text-align: center; padding: 48px 24px; }
     .empty-icon { font-size: 36px; margin-bottom: 12px; }
     .empty-text { font-size: 14px; color: var(--hint); line-height: 1.6; }
@@ -129,8 +148,6 @@
     .confirm-btns { display: flex; gap: 8px; }
     .btn-confirm-danger { flex: 1; background: var(--danger); color: white; border: none; border-radius: 9px; padding: 12px; font-size: 14px; font-weight: 600; cursor: pointer; }
     .btn-confirm-cancel { background: var(--bg); border: 1px solid var(--border); border-radius: 9px; padding: 12px 16px; font-size: 14px; cursor: pointer; }
-
-    /* Full screen photo viewer */
     #photo-viewer { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.92); z-index: 200; align-items: center; justify-content: center; flex-direction: column; }
     #photo-viewer.open { display: flex; }
     #photo-viewer img { max-width: 95vw; max-height: 85vh; object-fit: contain; border-radius: 8px; }
@@ -210,9 +227,17 @@
               <option value="">Sin especificar</option>
             </select>
           </div>
+          <!-- WISHLIST TOGGLE -->
+          <div class="wishlist-toggle" id="wishlist-toggle" onclick="toggleWishlist()">
+            <div class="wishlist-toggle-label">
+              <span>💛</span>
+              <span>Añadir a WishList</span>
+            </div>
+            <div class="toggle-switch"></div>
+          </div>
           <!-- FOTO -->
           <div class="photo-picker">
-            <label class="field-label">Foto del producto <span style="font-weight:400;color:var(--hint)">(opcional)</span></label>
+            <label class="field-label">Foto <span style="font-weight:400;color:var(--hint)">(opcional)</span></label>
             <input type="file" id="photo-input" accept="image/*" style="display:none" onchange="handlePhotoSelected(this)"/>
             <button type="button" class="photo-btn" onclick="document.getElementById('photo-input').click()">
               <span>📷</span> <span>Añadir foto (cámara o galería)</span>
@@ -222,8 +247,8 @@
               <button class="photo-remove" onclick="removePhoto()">✕</button>
             </div>
           </div>
-          <button class="btn-add" id="btn-add" onclick="addItem()"><span>+</span> Añadir a la lista</button>
-          <div class="toast" id="add-toast">Añadido ✓</div>
+          <button class="btn-add to-list" id="btn-add" onclick="addItem()"><span>+</span> <span id="btn-add-label">Añadir a la lista</span></button>
+          <div class="toast green" id="add-toast">Añadido ✓</div>
         </div>
       </div>
     </div>
@@ -245,6 +270,11 @@
       </div>
     </div>
 
+    <!-- TAB: WISHLIST -->
+    <div class="tab-panel" id="panel-wish">
+      <div class="body" id="wish-body"></div>
+    </div>
+
   </div>
   <div class="tabbar">
     <button class="tab on" id="tab-add" onclick="switchTab('add')">
@@ -255,6 +285,9 @@
     </button>
     <button class="tab" id="tab-cart" onclick="switchTab('cart')">
       <div class="tab-line"></div><span class="tab-icon">🛒</span><span class="tab-lbl">Carrito</span>
+    </button>
+    <button class="tab" id="tab-wish" onclick="switchTab('wish')">
+      <div class="tab-line"></div><span class="tab-icon">💛</span><span class="tab-lbl">WishList</span>
     </button>
   </div>
 </div>
@@ -315,9 +348,10 @@
 </div>
 
 <script>
-// ── CREDENCIALES — cambia estos dos valores por los tuyos ──────────
+// ── CREDENCIALES ───────────────────────────────────────────────────
 const SB_URL = 'https://aeeggawawrucaczrildu.supabase.co';   // https://xxxx.supabase.co
 const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFlZWdnYXdhd3J1Y2FjenJpbGR1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODYwMjg5ODAsImV4cCI6MjEwMTYwNDk4MH0.eg0RUMc-drq_yHXy0lbkdfxDesaxyne42pNCtxDSwSo';      // eyJhbGci...
+
 // ──────────────────────────────────────────────────────────────────
 
 let sb = null;
@@ -332,6 +366,7 @@ let syncInterval = null;
 let exportSupers = new Set(['__all__']);
 let exportPersons = new Set(['__all__']);
 let selectedPhotoFile = null;
+let isWishlist = false;
 
 function loadSupabase() {
   return new Promise((resolve, reject) => {
@@ -429,6 +464,21 @@ async function confirmAddSuper() {
   closeModal('addsuper-modal');
 }
 
+// ── Wishlist toggle ───────────────────────────────────────────────
+function toggleWishlist() {
+  isWishlist = !isWishlist;
+  const toggle = document.getElementById('wishlist-toggle');
+  const btn = document.getElementById('btn-add');
+  const label = document.getElementById('btn-add-label');
+  const toast = document.getElementById('add-toast');
+  toggle.classList.toggle('active', isWishlist);
+  btn.classList.toggle('to-list', !isWishlist);
+  btn.classList.toggle('to-wish', isWishlist);
+  label.textContent = isWishlist ? 'Añadir a WishList' : 'Añadir a la lista';
+  toast.classList.toggle('green', !isWishlist);
+  toast.classList.toggle('amber', isWishlist);
+}
+
 // ── Photo handling ────────────────────────────────────────────────
 function handlePhotoSelected(input) {
   const file = input.files[0];
@@ -451,7 +501,6 @@ function removePhoto() {
 
 async function uploadPhoto(itemId) {
   if (!selectedPhotoFile) return null;
-  // Compress to max 800px and ~300kb
   const compressed = await compressImage(selectedPhotoFile, 800, 0.75);
   const path = `${houseId}/${itemId}.jpg`;
   const { error } = await sb.storage.from('product-photos').upload(path, compressed, { upsert: true, contentType: 'image/jpeg' });
@@ -461,8 +510,7 @@ async function uploadPhoto(itemId) {
 }
 
 async function deletePhoto(itemId) {
-  const path = `${houseId}/${itemId}.jpg`;
-  await sb.storage.from('product-photos').remove([path]);
+  await sb.storage.from('product-photos').remove([`${houseId}/${itemId}.jpg`]);
 }
 
 function compressImage(file, maxSize, quality) {
@@ -511,18 +559,16 @@ async function addItem() {
   const unit = document.getElementById('inp-unit').value;
   const sup = document.getElementById('inp-super').value;
   const qtyLabel = qty + (unit !== 'ud' ? ' ' + unit : ' ud');
-
   const btn = document.getElementById('btn-add');
   btn.disabled = true;
-  btn.textContent = selectedPhotoFile ? 'Subiendo foto...' : 'Añadiendo...';
 
   const { data, error } = await sb.from('items').insert({
     house_id: houseId, name, qty: qtyLabel,
-    supermarket: sup || null, person: currentUser, done: false, photo_url: null
+    supermarket: sup || null, person: currentUser,
+    done: false, wishlist: isWishlist, photo_url: null
   }).select().single();
 
   if (!error && data) {
-    // Upload photo if selected
     if (selectedPhotoFile) {
       const photoUrl = await uploadPhoto(data.id);
       if (photoUrl) await sb.from('items').update({ photo_url: photoUrl }).eq('id', data.id);
@@ -532,12 +578,13 @@ async function addItem() {
     document.getElementById('qty-display').textContent = '1';
     document.getElementById('inp-super').value = '';
     removePhoto();
+    // Reset wishlist toggle after adding
+    if (isWishlist) toggleWishlist();
     showToast();
     await fetchItems();
   }
-
   btn.disabled = false;
-  btn.innerHTML = '<span>+</span> Añadir a la lista';
+  btn.innerHTML = `<span>+</span> <span id="btn-add-label">${isWishlist ? 'Añadir a WishList' : 'Añadir a la lista'}</span>`;
 }
 
 function changeQty(delta) {
@@ -547,6 +594,7 @@ function changeQty(delta) {
 
 function showToast() {
   const t = document.getElementById('add-toast');
+  t.textContent = isWishlist ? 'Añadido a WishList 💛' : 'Añadido a la lista ✓';
   t.classList.add('show');
   setTimeout(() => t.classList.remove('show'), 1800);
 }
@@ -564,17 +612,25 @@ async function deleteItem(id) {
   await fetchItems();
 }
 
+// ── Move from wishlist to list ────────────────────────────────────
+async function moveToList(id) {
+  await sb.from('items').update({ wishlist: false }).eq('id', id);
+  await fetchItems();
+}
+
 // ── Render ────────────────────────────────────────────────────────
 function renderAll() {
   renderListFilters();
   renderList();
   renderCart();
+  renderWish();
   updateCartBadge();
+  updateWishBadge();
 }
 
 function renderListFilters() {
-  const supers = [...new Set(items.filter(i => !i.done && i.supermarket).map(i => i.supermarket))];
-  const persons = [...new Set(items.filter(i => !i.done && i.person).map(i => i.person))];
+  const supers = [...new Set(items.filter(i => !i.done && !i.wishlist && i.supermarket).map(i => i.supermarket))];
+  const persons = [...new Set(items.filter(i => !i.done && !i.wishlist && i.person).map(i => i.person))];
   document.getElementById('list-filters').innerHTML =
     chipHTML('all', 'Todos', listFilter === 'all') +
     supers.map(s => chipHTML(s, s, listFilter === s)).join('') +
@@ -589,7 +645,7 @@ function setListFilter(val) { listFilter = val; renderListFilters(); renderList(
 
 function renderList() {
   const body = document.getElementById('list-body');
-  let pending = items.filter(i => !i.done);
+  let pending = items.filter(i => !i.done && !i.wishlist);
   if (listFilter !== 'all') {
     pending = listFilter.startsWith('p:')
       ? pending.filter(i => i.person === listFilter.slice(2))
@@ -599,7 +655,7 @@ function renderList() {
     body.innerHTML = `<div class="empty"><div class="empty-icon">✅</div><div class="empty-text">No hay productos pendientes.<br>¡Añade algo desde la pestaña Añadir!</div></div>`;
     return;
   }
-  body.innerHTML = `<div class="sec-label"><span>Pendientes <span class="sec-count">(${pending.length})</span></span></div>` + pending.map(itemHTML).join('');
+  body.innerHTML = `<div class="sec-label"><span>Pendientes <span class="sec-count">(${pending.length})</span></span></div>` + pending.map(i => itemHTML(i, false)).join('');
 }
 
 function renderCart() {
@@ -609,37 +665,58 @@ function renderCart() {
     body.innerHTML = `<div class="empty"><div class="empty-icon">🛒</div><div class="empty-text">El carrito está vacío.<br>Marca productos como comprados en la Lista.</div></div>`;
     return;
   }
-  body.innerHTML = `<div class="sec-label"><span>Comprados <span class="sec-count">(${done.length})</span></span></div>` + done.map(itemHTML).join('');
+  body.innerHTML = `<div class="sec-label"><span>Comprados <span class="sec-count">(${done.length})</span></span></div>` + done.map(i => itemHTML(i, false)).join('');
 }
 
-function itemHTML(i) {
+function renderWish() {
+  const body = document.getElementById('wish-body');
+  const wishes = items.filter(i => i.wishlist && !i.done);
+  if (!wishes.length) {
+    body.innerHTML = `<div class="empty"><div class="empty-icon">💛</div><div class="empty-text">La WishList está vacía.<br>Añade productos que no quieras olvidar.</div></div>`;
+    return;
+  }
+  body.innerHTML = `<div class="sec-label"><span>WishList <span class="sec-count">(${wishes.length})</span></span></div>` + wishes.map(i => itemHTML(i, true)).join('');
+}
+
+function itemHTML(i, isWish) {
   const sup = i.supermarket ? `<span class="tag-super">${i.supermarket}</span>` : '';
   const photoBtn = i.photo_url
     ? `<div class="item-photo-btn" onclick="openPhotoViewer('${i.photo_url}')"><img src="${i.photo_url}" alt="foto"/></div>`
-    : `<div class="item-photo-btn" style="opacity:.3;cursor:default">📷</div>`;
-  return `<div class="item ${i.done ? 'done' : ''}">
-    <div class="item-check ${i.done ? 'checked' : ''}" onclick="toggleItem(${i.id})"></div>
+    : `<div class="item-photo-btn" style="opacity:.25;cursor:default">📷</div>`;
+  const moveBtn = isWish ? `<button class="btn-move" onclick="moveToList(${i.id})">→ Lista</button>` : '';
+  const checkEl = isWish ? '' : `<div class="item-check ${i.done ? 'checked' : ''}" onclick="toggleItem(${i.id})"></div>`;
+  return `<div class="item ${i.done ? 'done' : ''} ${isWish ? 'wish' : ''}">
+    ${checkEl}
     <div class="item-body"><div class="item-name">${i.name}</div><div class="item-meta">${sup}</div></div>
     <div class="item-qty">${i.qty || '1'}</div>
     ${photoBtn}
+    ${moveBtn}
     <button class="item-del" onclick="deleteItem(${i.id})">✕</button>
   </div>`;
 }
 
 function updateCartBadge() {
   const done = items.filter(i => i.done).length;
-  const tab = document.getElementById('tab-cart');
+  setBadge('tab-cart', done);
+}
+
+function updateWishBadge() {
+  const wishes = items.filter(i => i.wishlist && !i.done).length;
+  setBadge('tab-wish', wishes);
+}
+
+function setBadge(tabId, count) {
+  const tab = document.getElementById(tabId);
   const existing = tab.querySelector('.tab-badge');
   if (existing) existing.remove();
-  if (done > 0) {
+  if (count > 0) {
     const badge = document.createElement('span');
     badge.className = 'tab-badge';
-    badge.textContent = done;
+    badge.textContent = count;
     tab.appendChild(badge);
   }
 }
 
-// ── Photo viewer ──────────────────────────────────────────────────
 function openPhotoViewer(url) {
   document.getElementById('photo-viewer-img').src = url;
   document.getElementById('photo-viewer').classList.add('open');
@@ -649,7 +726,6 @@ function closePhotoViewer() {
   document.getElementById('photo-viewer-img').src = '';
 }
 
-// ── Clear cart ────────────────────────────────────────────────────
 function openConfirmClear() {
   const done = items.filter(i => i.done);
   if (!done.length) { alert('El carrito ya está vacío.'); return; }
@@ -665,9 +741,8 @@ function openConfirmClear() {
   openModal('confirm-modal');
 }
 
-// ── Export ────────────────────────────────────────────────────────
 function openExport() {
-  const pending = items.filter(i => !i.done);
+  const pending = items.filter(i => !i.done && !i.wishlist);
   if (!pending.length) { alert('No hay productos pendientes que exportar.'); return; }
   const allSupers = [...new Set(pending.filter(i => i.supermarket).map(i => i.supermarket))];
   const allPersons = [...new Set(pending.filter(i => i.person).map(i => i.person))];
@@ -695,7 +770,7 @@ function toggleExportFilter(type, val) {
   const set = type === 'super' ? exportSupers : exportPersons;
   if (val === '__all__') { set.clear(); set.add('__all__'); }
   else { set.delete('__all__'); if (set.has(val)) { set.delete(val); if (set.size === 0) set.add('__all__'); } else set.add(val); }
-  const pending = items.filter(i => !i.done);
+  const pending = items.filter(i => !i.done && !i.wishlist);
   renderExportToggles(
     [...new Set(pending.filter(i => i.supermarket).map(i => i.supermarket))],
     [...new Set(pending.filter(i => i.person).map(i => i.person))]
@@ -705,7 +780,7 @@ function toggleExportFilter(type, val) {
 
 function buildExportText() {
   const filtered = items.filter(i => {
-    if (i.done) return false;
+    if (i.done || i.wishlist) return false;
     const superOk = exportSupers.has('__all__') || exportSupers.has(i.supermarket);
     const personOk = exportPersons.has('__all__') || exportPersons.has(i.person);
     return superOk && personOk;
@@ -742,7 +817,7 @@ function doWhatsApp() {
 
 function switchTab(tab) {
   activeTab = tab;
-  ['add', 'list', 'cart'].forEach(t => {
+  ['add', 'list', 'cart', 'wish'].forEach(t => {
     document.getElementById('tab-' + t).classList.toggle('on', t === tab);
     document.getElementById('panel-' + t).classList.toggle('active', t === tab);
   });
